@@ -22,27 +22,20 @@ public class Calendar {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		Calendar cal = new Calendar();
-		System.out.printf("반복 횟수를 입력하세요.\n");
-		int repeat = scanner.nextInt();
-		System.out.printf("월을 입력하세요.\n");
-		int[] month = new int[repeat];
-		//for 문을 이용하여 작성한다.
-//		for (int i = 0; i < repeat; i++) {
-//			month[i] = scanner.nextInt();
-//		}
-//		for (int j = 0; j < repeat; j++) {
-//			System.out.printf("%d월은 %d일까지 있습니다.\n", month[j], cal.getMaxDaysOfMonth(month[j]));
-//		}
-		//while 문을 이용하여 작성한다.
-		int i = 0, j = 0;
-		while(i < repeat) {
-			month[i] = scanner.nextInt();
-			i++;
+
+		while (true) {
+			System.out.printf("월을 입력하세요.\n");
+			System.out.printf("> ");
+			int month = scanner.nextInt();
+			if (month == -1) {
+				break;
+			}
+			if (month > 12 || month < 1) {
+				continue;
+			}
+			System.out.printf("%d월은 %d일까지 있습니다.\n", month, cal.getMaxDaysOfMonth(month));
 		}
-		while(j < repeat) {
-			System.out.printf("%d월은 %d일까지 있습니다.\n", month[j], cal.getMaxDaysOfMonth(month[j]));
-			j++;
-		}
+		System.out.printf("Have a nice day!\n");
 		scanner.close();
 	}
 
