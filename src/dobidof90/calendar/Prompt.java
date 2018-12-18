@@ -37,23 +37,24 @@ public class Prompt {
 		Calendar cal = new Calendar();
 
 		while (true) {
-			System.out.printf("연도를 입력하세요.\n");
+			System.out.printf("연도를 입력하세요. (EXIT : -1)\n");
 			System.out.printf("YEAR> ");
 			int year = scanner.nextInt();
+			if (year == -1) {
+				break;
+			}
 			System.out.printf("월을 입력하세요.\n");
 			System.out.printf("MONTH> ");
 			int month = scanner.nextInt();
-			if (month == -1) {
-				break;
-			}
 			if (month > 12 || month < 1) {
+				System.out.printf("입력값을 확인하세요!\n");
 				continue;
 			}
-			System.out.printf("첫번째 요일을 입력하세요. (SU, MO, TU, WE, TH, FR, SA)\n");
-			System.out.printf("WEEKDAY> ");
-			String str_weekday = scanner.next();
-			int weekday = parseDay(str_weekday);
-			cal.printCalendar(year, month, weekday);
+//			System.out.printf("첫번째 요일을 입력하세요. (SU, MO, TU, WE, TH, FR, SA)\n");
+//			System.out.printf("WEEKDAY> ");
+//			String str_weekday = scanner.next();
+//			int weekday = parseDay(str_weekday);
+			cal.printCalendar(year, month);
 		}
 		System.out.printf("Have a nice day!\n");
 		scanner.close();
