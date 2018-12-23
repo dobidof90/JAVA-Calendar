@@ -1,63 +1,90 @@
 package dobidof90.calendar;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Prompt {
-	//String으로 입력받은 WEEKDAY 정보를 int 타입으로 변경하는 함수를 따로 만들어준다.
-	public int parseDay(String str_weekday) {
-		int weekday = 0;
-		switch (str_weekday) {
-		case "SU":
-			weekday = 0;
-			break;
-		case "MO":
-			weekday = 1;
-			break;
-		case "TU":
-			weekday = 2;
-			break;
-		case "WE":
-			weekday = 3;
-			break;
-		case "TH":
-			weekday = 4;
-			break;
-		case "FR":
-			weekday = 5;
-			break;
-		case "SA":
-			weekday = 6;
-			break;
-		}
-		return weekday;
+
+	public void printMenu() {
+		System.out.println("+----------------------+");
+		System.out.println("| 1. 일정 등록             ");
+		System.out.println("| 2. 일정 검색             ");
+		System.out.println("| 3. 달력 보기	    ");
+		System.out.println("| h. 도움말 q. 종료	");
+		System.out.println("+----------------------+");
 	}
 
 	public void runPrompt() {
 		Scanner scanner = new Scanner(System.in);
 		Calendar cal = new Calendar();
+		HashMap<String, String> map = new HashMap<String, String>();
 
-		while (true) {
-			System.out.printf("연도를 입력하세요. (EXIT : -1)\n");
-			System.out.printf("YEAR> ");
-			int year = scanner.nextInt();
-			if (year == -1) {
+		printMenu();
+		int loop = 1;
+		while (loop == 1) {
+			System.out.printf("명령 (1, 2, 3, h, q)\n");
+			System.out.printf("> ");
+			String cmd = scanner.next();
+
+			switch (cmd) {
+			case "1":
+				cmdRegister(map, scanner);
+				break;
+			case "2":
+				cmdSearch(map, scanner);
+				break;
+			case "3":
+				cmdCal(cal, scanner);
+				break;
+			case "h":
+				printMenu();
+				break;
+			case "q":
+				loop = 0;
 				break;
 			}
-			System.out.printf("월을 입력하세요.\n");
-			System.out.printf("MONTH> ");
-			int month = scanner.nextInt();
-			if (month > 12 || month < 1) {
-				System.out.printf("입력값을 확인하세요!\n");
-				continue;
-			}
-//			System.out.printf("첫번째 요일을 입력하세요. (SU, MO, TU, WE, TH, FR, SA)\n");
-//			System.out.printf("WEEKDAY> ");
-//			String str_weekday = scanner.next();
-//			int weekday = parseDay(str_weekday);
-			cal.printCalendar(year, month);
 		}
+
 		System.out.printf("Have a nice day!\n");
 		scanner.close();
+	}
+
+	private void cmdCal(Calendar cal, Scanner scanner) {
+		System.out.printf("연도를 입력하세요.\n");
+		System.out.printf("YEAR> ");
+		int year = scanner.nextInt();
+		System.out.printf("월을 입력하세요.\n");
+		System.out.printf("MONTH> ");
+		int month = scanner.nextInt();
+		cal.printCalendar(year, month);
+	}
+
+	private void cmdSearch(HashMap<String, String> map, Scanner scanner) {
+		System.out.printf("[일정 검색] 날짜를 입력하세요. (0000-00-00)\n");
+		System.out.printf("> ");
+		String date = scanner.next();
+		String plan = map.get(date);
+
+		if (plan != null) {
+			System.out.printf("1개의 일정이 있습니다.\n");
+			System.out.printf("1. %s\n", plan);
+		} else {
+			System.out.printf("일정이 없습니다.\n");
+		}
+	}
+
+	private void cmdRegister(HashMap<String, String> map, Scanner scanner) {
+		System.out.printf("[일정 등록] 날짜를 입력하세요. (0000-00-00)\n");
+		System.out.printf("> ");
+		String date = scanner.next();
+
+		System.out.printf("일정을 입력하세요.\n");
+		System.out.printf("> ");
+		String plan = scanner.next();
+
+		map.put(date, plan);
+
+		System.out.printf("일정이 등록되었습니다.\n");
 	}
 
 	public static void main(String[] args) {
